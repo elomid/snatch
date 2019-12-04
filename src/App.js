@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import firebase from "./firebase";
+import firebase, { db } from "./firebase";
 import Header from "./Header";
 import Nav from "./Nav";
 import List from "./List";
@@ -7,16 +7,47 @@ import List from "./List";
 function useAuth() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    return firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        setUser({
-          displayName: user.displayName,
-          photoUrl: user.photoURL,
-          id: user.uid
-        });
-        setLoading(false);
+    return firebase.auth().onAuthStateChanged(firebaseUser => {
+      if (firebaseUser) {
+        const userRef = db.collection("users").doc(firebaseUser.uid);
+        userRef
+          .get()
+          .then(doc => {
+            if (doc.exists) {
+              // user exists, read info from db
+              setUser({
+                id: doc.id,
+                ...doc.data()
+              });
+              setError(null);
+              setLoading(false);
+            } else {
+              // create new user doc in db
+              const dbUser = {
+                id: firebaseUser.uid,
+                diplayName: firebaseUser.displayName,
+                photoUrl: firebaseUser.photoURL,
+                email: firebaseUser.email
+              };
+              userRef
+                .set(dbUser, { merge: true })
+                .then(() => {
+                  setUser(dbUser);
+                  setError(null);
+                  setLoading(false);
+                })
+                .then(() => {
+                  // TODO: create default inbox list here
+                });
+            }
+          })
+          .catch(error => {
+            setLoading(false);
+            setError(error);
+          });
       } else {
         setUser(null);
         setLoading(false);
@@ -24,11 +55,11 @@ function useAuth() {
     });
   }, []);
 
-  return [loading, user];
+  return [error, loading, user];
 }
 
 function App() {
-  const [loading, user] = useAuth();
+  const [error, loading, user] = useAuth();
 
   const handleSignOut = async () => {
     await firebase.auth().signOut();
