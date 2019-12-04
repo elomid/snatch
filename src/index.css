@@ -27,6 +27,7 @@ body {
 .sidebar {
   position: relative;
   height: calc(100% - 64px);
+  padding-bottom: 64px;
 }
 
 .add-list-container {
@@ -42,6 +43,8 @@ body {
 
 .sidebar__nav {
   padding: 24px;
+  overflow-y: auto;
+  height: 100%;
 }
 
 .nav-item {

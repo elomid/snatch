@@ -1,7 +1,7 @@
 import React from "react";
 
-function PagePublisher() {
-  return <div className="page-publisher">Intercom</div>;
+function PagePublisher({ publisher }) {
+  return <div className="page-publisher">{publisher}</div>;
 }
 
 export default PagePublisher;
