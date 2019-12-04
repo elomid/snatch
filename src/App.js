@@ -4,6 +4,18 @@ import Header from "./Header";
 import Nav from "./Nav";
 import List from "./List";
 
+function setUpNewUserAccount(userRef) {
+  // create the default "inbox" list for new users
+  userRef
+    .collection("lists")
+    .doc("inbox")
+    .set({
+      title: "Inbox",
+      path: "inbox",
+      createdAt: new Date()
+    });
+}
+
 function useAuth() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -40,7 +52,7 @@ function useAuth() {
                   setLoading(false);
                 })
                 .then(() => {
-                  // TODO: create default inbox list here
+                  setUpNewUserAccount(userRef);
                 });
             }
           })
@@ -71,8 +83,8 @@ function App() {
     <div>
       <Header user={user} onSignOut={handleSignOut} />
       <div className="content-wrapper">
-        <Nav />
-        <List />
+        <Nav userId={user.id} />
+        <List userId={user.id} />
       </div>
     </div>
   ) : (
