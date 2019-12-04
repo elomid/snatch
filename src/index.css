@@ -32,7 +32,7 @@ body {
   display: block;
   background: white;
   color: rgb(38, 36, 46);
-  font-weight: 600;
+  font-weight: 500;
   margin-bottom: 8px;
   padding: 8px;
   border-radius: 4px;
@@ -42,4 +42,115 @@ body {
 .nav-item--active {
   background: rgb(234, 229, 251);
   color: rgb(88, 38, 242);
+}
+
+.list-wrapper {
+  margin-left: 240px;
+}
+
+.list {
+  margin: 0 auto;
+  max-width: 960px;
+  padding: 24px;
+}
+
+.page {
+  padding: 24px 0px;
+  border-bottom: 1px solid rgb(222, 222, 223);
+  position: relative;
+}
+
+.page-title {
+  display: flex;
+  align-items: center;
+  padding: 8px 0;
+}
+
+.page-link {
+  font-weight: 500;
+  color: rgb(38, 36, 46) !important;
+  text-decoration: none;
+  display: block;
+}
+
+.page-publisher {
+  font-size: 12px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: rgb(89, 93, 105);
+  display: inline-block;
+  background: rgb(241, 242, 243);
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.page-description {
+  font-size: 15px;
+  opacity: 0.7;
+}
+
+.page-actions {
+  margin-top: 24px;
+}
+
+.button {
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: background 0.2s ease;
+  cursor: pointer;
+}
+
+.button-secondary {
+  border: 1px solid rgb(222, 222, 223);
+  margin-right: 8px;
+}
+
+.button-secondary:hover {
+  background: rgb(240, 240, 245);
+}
+
+.button-slim {
+  padding: 4px 8px;
+}
+
+.list-info {
+  margin-bottom: 32px;
+}
+
+.list-title {
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.title-input {
+  font: inherit;
+  border: 1px solid transparent;
+}
+
+.title-input:hover {
+  border: 1px dashed #dededf;
+}
+
+.title-input:focus {
+  border: 1px solid #dededf;
+}
+
+.header {
+  height: 64px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  width: 100%;
+  top: 0px;
+  left: 0px;
+  z-index: 6;
+  padding: 0px 32px;
+  border-bottom: 1px solid rgb(222, 222, 223);
+  background: white;
+}
+
+.content-wrapper {
+  padding-top: 64px;
 }
