@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import firebase from "firebase/app";
+import "firebase/firestore";
 import "./App.css";
 
 // Firebase configuration for snatch-b94e3
@@ -16,26 +17,40 @@ const firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
+const db = firebase.firestore();
+
+// remove hardcoded userId after authentication is set up
+const userId = "0diqOSAmwzTzccIJFzwJKZihWxc2";
+
 function App() {
-  const [lists, setLists] = useState([
-    {
-      id: "00",
-      displayName: "Inbox",
-      path: "inbox"
-    },
-    {
-      id: "01",
-      displayName: "Must read articles",
-      path: "must-read-articles"
-    }
-  ]);
+  const [lists, setLists] = useState([]);
+
+  useEffect(() => {
+    const userRef = db.collection("users").doc(userId);
+
+    userRef.collection("lists").onSnapshot(snap => {
+      const docs = [];
+      snap.forEach(doc => {
+        docs.push({
+          ...doc.data(),
+          id: doc.id
+        });
+      });
+      console.log(docs);
+      setLists(docs);
+    });
+  }, []);
 
   return (
-    <nav className="App">
-      {lists.map(list => (
-        <a href={`/list/${list.path}`}>{list.displayName}</a>
-      ))}
-    </nav>
+    <div className="sidebar">
+      <nav className="sidebar__nav">
+        {lists.map(list => (
+          <a className="nav-item" key={list.id} href={`/list/${list.path}`}>
+            {list.displayName}
+          </a>
+        ))}
+      </nav>
+    </div>
   );
 }
 
