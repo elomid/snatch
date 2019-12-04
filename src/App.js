@@ -28,7 +28,7 @@ function App() {
   useEffect(() => {
     const userRef = db.collection("users").doc(userId);
 
-    userRef.collection("lists").onSnapshot(snap => {
+    const unsubscribe = userRef.collection("lists").onSnapshot(snap => {
       const docs = [];
       snap.forEach(doc => {
         docs.push({
@@ -36,9 +36,10 @@ function App() {
           id: doc.id
         });
       });
-      console.log(docs);
       setLists(docs);
     });
+
+    return unsubscribe;
   }, []);
 
   return (
