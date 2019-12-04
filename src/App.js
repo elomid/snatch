@@ -13,7 +13,23 @@ function setUpNewUserAccount(userRef) {
       title: "Inbox",
       path: "inbox",
       createdAt: new Date()
-    });
+    })
+    .then(() => {
+      // create the first default page for new users
+      userRef.collection("pages").add({
+        archived: false,
+        archivedAt: null,
+        createdAt: new Date(),
+        deleted: false,
+        deletedAt: false,
+        description: "here is your first page!",
+        listId: "inbox",
+        publisher: "Snatch",
+        title: "Get started with Snatch",
+        url: "https://snatch.page/getstarted"
+      });
+    })
+    .catch(err => console.error(err));
 }
 
 function useAuth() {
