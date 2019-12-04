@@ -1,6 +1,5 @@
 import React from "react";
 import logo from "./img/logo.svg";
-import { userInfo } from "os";
 
 function Header({ user, onSignOut }) {
   return (
