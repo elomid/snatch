@@ -8,7 +8,7 @@ function App() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    firebase.auth().onAuthStateChanged(user => {
+    return firebase.auth().onAuthStateChanged(user => {
       if (user) {
         setUser(user);
       } else {
@@ -22,9 +22,13 @@ function App() {
     await firebase.auth().signInWithPopup(provider);
   };
 
+  const hanleSignOut = async () => {
+    await firebase.auth().signOut();
+  };
+
   return user ? (
     <div>
-      <Header />
+      <Header user={user} onSignOut={hanleSignOut} />
       <div className="content-wrapper">
         <Nav />
         <List />

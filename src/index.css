@@ -221,3 +221,23 @@ body {
 .sign-in p {
   margin-bottom: 40px;
 }
+
+.user-options {
+  display: flex;
+  align-items: center;
+}
+
+.user-photo-container {
+  margin-right: 16px;
+  width: 32px;
+  height: 32px;
+  border-radius: 32px;
+  overflow: hidden;
+  background: #dededf;
+  content: "OE";
+}
+
+.user-photo {
+  max-width: 100%;
+  display: block;
+}
