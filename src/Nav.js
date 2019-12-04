@@ -13,16 +13,19 @@ function Nav() {
 
   useEffect(() => {
     const userRef = db.collection("users").doc(userId);
-    const unsubscribe = userRef.collection("lists").onSnapshot(snap => {
-      const docs = [];
-      snap.forEach(doc => {
-        docs.push({
-          ...doc.data(),
-          id: doc.id
+    const unsubscribe = userRef
+      .collection("lists")
+      .orderBy("createdAt")
+      .onSnapshot(snap => {
+        const docs = [];
+        snap.forEach(doc => {
+          docs.push({
+            ...doc.data(),
+            id: doc.id
+          });
         });
+        setLists(docs);
       });
-      setLists(docs);
-    });
 
     return unsubscribe;
   }, []);
@@ -34,7 +37,8 @@ function Nav() {
       .collection("lists")
       .add({
         title,
-        path: slugify(title)
+        path: slugify(title),
+        createdAt: new Date()
       })
       .then(() => {
         setLoading(false);
