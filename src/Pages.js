@@ -1,32 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { db } from "./firebase";
 import Page from "./Page";
+import useCollection from "./useCollection";
 
 const userId = "0diqOSAmwzTzccIJFzwJKZihWxc2";
 
 function Pages() {
-  const [pages, setPages] = useState([]);
-
-  // TODO: get pages for the currently selected list
-  useEffect(() => {
-    const pagesRef = db
-      .collection("users")
-      .doc(userId)
-      .collection("pages");
-
-    const unsubscribe = pagesRef.onSnapshot(snap => {
-      const docs = [];
-      snap.forEach(doc => {
-        docs.push({
-          ...doc.data(),
-          id: doc.id
-        });
-      });
-      setPages(docs);
-    });
-
-    return unsubscribe;
-  }, []);
+  const [loading, pages] = useCollection({
+    userId,
+    path: "/pages",
+    order: "createdAt",
+    filterKey: "listId",
+    filterValue: "inbox"
+  });
 
   return (
     <ul className="pages">
