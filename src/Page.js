@@ -4,12 +4,12 @@ import PageActions from "./PageActions";
 import PageDescription from "./PageDescription";
 import PagePublisher from "./PagePublisher";
 
-function Page() {
+function Page({ page }) {
   return (
     <li className="page">
-      <PagePublisher />
-      <PageLink />
-      <PageDescription />
+      <PagePublisher publisher={page.publisher} />
+      <PageLink url={page.url} title={page.title} />
+      <PageDescription description={page.description} />
       <PageActions />
     </li>
   );

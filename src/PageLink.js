@@ -1,16 +1,14 @@
 import React from "react";
 
-function PageLink() {
+function PageLink({ url, title }) {
   return (
     <a
       className="page-link"
-      href="https://www.intercom.com/blog/design-team-switching-to-figma/"
+      href={url}
       target="_blank"
       rel="noopener noreferrer"
     >
-      <div className="page-title">
-        How our design team switched to Figma | Inside Intercom
-      </div>
+      <div className="page-title">{title}</div>
     </a>
   );
 }
