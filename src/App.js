@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import firebase from "./firebase";
 import Header from "./Header";
 import Nav from "./Nav";
@@ -7,10 +7,19 @@ import List from "./List";
 function App() {
   const [user, setUser] = useState(null);
 
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        setUser(user);
+      } else {
+        setUser(null);
+      }
+    });
+  }, []);
+
   const handleSignIn = async () => {
     const provider = new firebase.auth.GoogleAuthProvider();
-    const result = await firebase.auth().signInWithPopup(provider);
-    setUser(result.user);
+    await firebase.auth().signInWithPopup(provider);
   };
 
   return user ? (
