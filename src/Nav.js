@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ComposeList from "./ComposeList";
 import { db } from "./firebase";
+import { slugify } from "./utils";
 
 // TODO: remove hardcoded userId after authentication is set up
 const userId = "0diqOSAmwzTzccIJFzwJKZihWxc2";
@@ -28,7 +29,11 @@ function Nav() {
 
   const AddNewList = title => {
     setLoading(true);
-    // TODO: write to db
+    const userRef = db.collection("users").doc(userId);
+    userRef.collection("lists").add({
+      title,
+      path: slugify(title)
+    });
     console.log(title);
   };
 
@@ -38,7 +43,7 @@ function Nav() {
         <nav className="sidebar__nav">
           {lists.map(list => (
             <a className="nav-item" key={list.id} href={`/list/${list.path}`}>
-              {list.displayName}
+              {list.title}
             </a>
           ))}
         </nav>
