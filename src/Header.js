@@ -12,7 +12,7 @@ function Header({ user, onSignOut }) {
         <div className="user-photo-container">
           <img
             className="user-photo"
-            src={user.photoURL}
+            src={user.photoUrl}
             alt={user.displayName}
           />
         </div>

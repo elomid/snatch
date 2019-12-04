@@ -4,18 +4,31 @@ import Header from "./Header";
 import Nav from "./Nav";
 import List from "./List";
 
-function App() {
+function useAuth() {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     return firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        setUser(user);
+        setUser({
+          displayName: user.displayName,
+          photoUrl: user.photoURL,
+          id: user.uid
+        });
+        setLoading(false);
       } else {
         setUser(null);
+        setLoading(false);
       }
     });
   }, []);
+
+  return [loading, user];
+}
+
+function App() {
+  const [loading, user] = useAuth();
 
   const handleSignIn = async () => {
     const provider = new firebase.auth.GoogleAuthProvider();
@@ -26,7 +39,9 @@ function App() {
     await firebase.auth().signOut();
   };
 
-  return user ? (
+  return loading ? (
+    <div>Loading...</div>
+  ) : user ? (
     <div>
       <Header user={user} onSignOut={hanleSignOut} />
       <div className="content-wrapper">
