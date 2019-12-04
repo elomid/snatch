@@ -30,11 +30,16 @@ function Nav() {
   const AddNewList = title => {
     setLoading(true);
     const userRef = db.collection("users").doc(userId);
-    userRef.collection("lists").add({
-      title,
-      path: slugify(title)
-    });
-    console.log(title);
+    userRef
+      .collection("lists")
+      .add({
+        title,
+        path: slugify(title)
+      })
+      .then(() => {
+        setLoading(false);
+        setComposing(false);
+      });
   };
 
   return (
@@ -48,7 +53,7 @@ function Nav() {
           ))}
         </nav>
         <div className="add-list-container">
-          {!composing && (
+          {!composing && !loading && (
             <button
               onClick={() => setComposing(true)}
               className="button button-secondary button-borderless button-full"
@@ -56,12 +61,14 @@ function Nav() {
               + Add list
             </button>
           )}
-          {composing && (
+          {composing && !loading && (
             <ComposeList
               onCancel={() => setComposing(false)}
               onSubmit={AddNewList}
             />
           )}
+          {/* {TODO: enhance loading state} */}
+          {loading && <div>Loading</div>}
         </div>
       </div>
     </div>
