@@ -1,5 +1,4 @@
-import React from "react";
-import logo from "./logo.svg";
+import React, { useState, useEffect } from "react";
 import firebase from "firebase/app";
 import "./App.css";
 
@@ -18,23 +17,25 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 function App() {
+  const [lists, setLists] = useState([
+    {
+      id: "00",
+      displayName: "Inbox",
+      path: "inbox"
+    },
+    {
+      id: "01",
+      displayName: "Must read articles",
+      path: "must-read-articles"
+    }
+  ]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <nav className="App">
+      {lists.map(list => (
+        <a href={`/list/${list.path}`}>{list.displayName}</a>
+      ))}
+    </nav>
   );
 }
 
