@@ -6,29 +6,35 @@ import { slugify } from "./utils";
 // TODO: remove hardcoded userId after authentication is set up
 const userId = "0diqOSAmwzTzccIJFzwJKZihWxc2";
 
-function Nav() {
-  const [lists, setLists] = useState([]);
-  const [composing, setComposing] = useState(false);
-  const [loading, setLoading] = useState(false);
+// TODO: move custom hooks to a separate file
+function useCollection(userId, path, order) {
+  const [loading, setLoading] = useState(true);
+  const [docs, setDocs] = useState([]);
 
   useEffect(() => {
-    const userRef = db.collection("users").doc(userId);
-    const unsubscribe = userRef
-      .collection("lists")
-      .orderBy("createdAt")
-      .onSnapshot(snap => {
-        const docs = [];
-        snap.forEach(doc => {
-          docs.push({
-            ...doc.data(),
-            id: doc.id
-          });
+    const messagesRef = db.collection("users/" + userId + path).orderBy(order);
+    const unsubscribe = messagesRef.onSnapshot(snap => {
+      const docs = [];
+      snap.forEach(doc => {
+        docs.push({
+          ...doc.data(),
+          id: doc.id
         });
-        setLists(docs);
       });
+      setDocs(docs);
+    });
+    setLoading(false);
 
     return unsubscribe;
-  }, []);
+  }, [order, path, userId]);
+
+  return [loading, docs];
+}
+
+function Nav() {
+  const [listsLoading, lists] = useCollection(userId, "/lists", "createdAt");
+  const [composing, setComposing] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const AddNewList = title => {
     setLoading(true);
