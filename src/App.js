@@ -30,12 +30,7 @@ function useAuth() {
 function App() {
   const [loading, user] = useAuth();
 
-  const handleSignIn = async () => {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    await firebase.auth().signInWithPopup(provider);
-  };
-
-  const hanleSignOut = async () => {
+  const handleSignOut = async () => {
     await firebase.auth().signOut();
   };
 
@@ -43,13 +38,30 @@ function App() {
     <div>Loading...</div>
   ) : user ? (
     <div>
-      <Header user={user} onSignOut={hanleSignOut} />
+      <Header user={user} onSignOut={handleSignOut} />
       <div className="content-wrapper">
         <Nav />
         <List />
       </div>
     </div>
   ) : (
+    <SignIn />
+  );
+}
+
+function SignIn() {
+  const [error, setError] = useState(null);
+
+  const handleSignIn = async () => {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    try {
+      await firebase.auth().signInWithPopup(provider);
+    } catch (err) {
+      setError(err);
+    }
+  };
+
+  return (
     <div className="sign-in">
       <h1>Save and organize content from anyhwere on the web</h1>
       <p>
@@ -59,6 +71,12 @@ function App() {
       <button onClick={handleSignIn} className="button button-primary">
         Sign in with Google
       </button>
+      {error && (
+        <div>
+          <p>Sorry, there was a problem. Please try again</p>
+          <p>{error.message}</p>
+        </div>
+      )}
     </div>
   );
 }
