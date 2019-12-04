@@ -35,7 +35,7 @@ body {
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 12px 24px;
+  padding: 16px 24px;
   background: white;
   border-top: 1px solid #dededf;
 }
@@ -122,6 +122,18 @@ body {
   margin-right: 8px;
 }
 
+.button-primary {
+  border: 1px solid rgb(78, 22, 248);
+  background: rgb(78, 22, 248);
+  color: white;
+}
+
+.button-primary:hover {
+  border: 1px solid #3600d6;
+  background: #3600d6;
+  color: white;
+}
+
 .button-secondary:hover {
   background: rgb(240, 240, 245);
 }
@@ -177,4 +189,20 @@ body {
 
 .content-wrapper {
   padding-top: 64px;
+}
+
+.compose-input {
+  display: block;
+  width: 100%;
+  font-size: 16px;
+  padding: 8px 12px;
+  border: 1px solid #dededf;
+  border-radius: 4px;
+}
+
+.compose-actions {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
