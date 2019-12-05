@@ -2,12 +2,12 @@ import React from "react";
 import ListInfo from "./ListInfo";
 import Pages from "./Pages";
 
-function List() {
+function List({ userId }) {
   return (
     <div className="list-wrapper">
       <div className="list">
         <ListInfo />
-        <Pages />
+        <Pages userId={userId} />
       </div>
     </div>
   );

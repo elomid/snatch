@@ -3,9 +3,7 @@ import { db } from "./firebase";
 import Page from "./Page";
 import useCollection from "./useCollection";
 
-const userId = "0diqOSAmwzTzccIJFzwJKZihWxc2";
-
-function Pages() {
+function Pages({ userId }) {
   const [loading, pages] = useCollection({
     userId,
     path: "/pages",

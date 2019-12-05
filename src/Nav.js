@@ -4,10 +4,7 @@ import { db } from "./firebase";
 import { slugify } from "./utils";
 import useCollection from "./useCollection";
 
-// TODO: remove hardcoded userId after authentication is set up
-const userId = "0diqOSAmwzTzccIJFzwJKZihWxc2";
-
-function Nav() {
+function Nav({ userId }) {
   const [listsLoading, lists] = useCollection({
     userId,
     path: "/lists",
