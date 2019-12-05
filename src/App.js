@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import firebase, { db } from "./firebase";
 import Header from "./Header";
 import Nav from "./Nav";
@@ -99,8 +100,12 @@ function App() {
     <div>
       <Header user={user} onSignOut={handleSignOut} />
       <div className="content-wrapper">
-        <Nav userId={user.id} />
-        <List userId={user.id} />
+        <Router>
+          <Nav userId={user.id} />
+          <Route path="/list/:listId">
+            <List userId={user.id} />
+          </Route>
+        </Router>
       </div>
     </div>
   ) : (

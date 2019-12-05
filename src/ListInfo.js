@@ -1,6 +1,6 @@
 import React from "react";
 
-function ListInfo() {
+function ListInfo({ userId, listId }) {
   return (
     <div className="list-info">
       <div className="list-title">

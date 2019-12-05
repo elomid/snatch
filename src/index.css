@@ -58,7 +58,12 @@ body {
   text-decoration: none;
 }
 
-.nav-item--active {
+.nav-item:hover {
+  background: rgb(241, 242, 243);
+}
+
+.nav-item--active,
+.nav-item--active:hover {
   background: rgb(234, 229, 251);
   color: rgb(88, 38, 242);
 }
