@@ -21,10 +21,8 @@
   "background": {
     "page": "background.html"
   },
-  "permissions": [
-    "identity", "tabs"
-  ],
-  "content_security_policy":"script-src 'self' https://www.gstatic.com/ https://*.firebaseio.com https://www.googleapis.com; object-src 'self'",
+  "permissions": ["identity", "tabs"],
+  "content_security_policy": "script-src 'self' https://www.gstatic.com/ https://*.firebaseio.com https://www.googleapis.com; object-src 'self'",
   "oauth2": {
     "client_id": "104535857240-tup0s52n2nhcp0koruqun4l3h47omo2g.apps.googleusercontent.com",
     "scopes": [
@@ -32,13 +30,5 @@
       "https://www.googleapis.com/auth/userinfo.profile"
     ]
   },
-  "key": "-----BEGIN PUBLIC KEY-----
-  MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAluWRN8iWZryz7kOUhXi3
-  AMBsy7uuEtVsuJVrC7xU00BybceiLbv4+PLVq0KsfSs1g0FSo6/KYYNHKd071lxf
-  /Hvr+MMoNn228MRBox4dETFSad9KC1y4273EX1vLtoy5LObUhvGjfAPWgUUVqLXZ
-  xL5XT3Bx77eZ2u9/27PuNrHh75BrqL7p+NgTpGz0CwMThmRbXUSr5BjJSc7qvCsL
-  xSPDP+WDEKq4gPh0XfacMhaQaq8bUwxb3MYIlrKohzigW1j3JoQ0JJuPcjsHTkRS
-  aoKihKb7zLQuDEKN8mWln5bVx3igBt7wLoGbGsx3WBXu9FkxoaweMrZSpVEWjzZV
-  3QIDAQAB
-  -----END PUBLIC KEY-----"
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAluWRN8iWZryz7kOUhXi3AMBsy7uuEtVsuJVrC7xU00BybceiLbv4+PLVq0KsfSs1g0FSo6/KYYNHKd071lxf/Hvr+MMoNn228MRBox4dETFSad9KC1y4273EX1vLtoy5LObUhvGjfAPWgUUVqLXZxL5XT3Bx77eZ2u9/27PuNrHh75BrqL7p+NgTpGz0CwMThmRbXUSr5BjJSc7qvCsLxSPDP+WDEKq4gPh0XfacMhaQaq8bUwxb3MYIlrKohzigW1j3JoQ0JJuPcjsHTkRSaoKihKb7zLQuDEKN8mWln5bVx3igBt7wLoGbGsx3WBXu9FkxoaweMrZSpVEWjzZV3QIDAQAB"
 }
