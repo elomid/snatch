@@ -1,4 +1,5 @@
-// TODO(DEVELOPER): Change the values below using values from the initialization snippet: Firebase Console > Overview > Add Firebase to your web app.
+/* globals chrome, firebase */
+
 // Initialize Firebase
 var config = {
   apiKey: "AIzaSyB2rRbMgGNT-Za0SfEMekz4M01nXK9_yFA",

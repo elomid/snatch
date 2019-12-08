@@ -1,4 +1,5 @@
-// TODO(DEVELOPER): Change the values below using values from the initialization snippet: Firebase Console > Overview > Add Firebase to your web app.
+/* globals chrome, firebase */
+
 // Initialize Firebase
 var config = {
   apiKey: "AIzaSyB2rRbMgGNT-Za0SfEMekz4M01nXK9_yFA",
@@ -10,6 +11,8 @@ var config = {
   appId: "1:104535857240:web:d3f416720f9dc4125ad22d"
 };
 firebase.initializeApp(config);
+
+var db = firebase.firestore();
 
 /**
  * initApp handles setting up the Firebase context and registering
@@ -25,6 +28,35 @@ firebase.initializeApp(config);
  *
  * When signed in, we also authenticate to the Firebase Realtime Database.
  */
+
+function setUpNewUserAccount(userRef) {
+  // create the default "inbox" list for new users
+  userRef
+    .collection("lists")
+    .doc("inbox")
+    .set({
+      title: "Inbox",
+      path: "inbox",
+      createdAt: new Date()
+    })
+    .then(() => {
+      // create the first default page for new users
+      userRef.collection("pages").add({
+        archived: false,
+        archivedAt: null,
+        createdAt: new Date(),
+        deleted: false,
+        deletedAt: false,
+        description: "here is your first page!",
+        listId: "inbox",
+        publisher: "Snatch",
+        title: "Get started with Snatch",
+        url: "https://snatch.page/getstarted"
+      });
+    })
+    .catch(err => console.error(err));
+}
+
 function initApp() {
   // Listen for auth state changes.
   // [START authstatelistener]
@@ -38,6 +70,30 @@ function initApp() {
       var isAnonymous = user.isAnonymous;
       var uid = user.uid;
       var providerData = user.providerData;
+
+      (async function createOrLocateUser(uid) {
+        const userRef = db.collection("users").doc(uid);
+        userRef
+          .get()
+          .then(doc => {
+            if (!doc.exists) {
+              // create new user doc in db
+              const dbUser = {
+                id: uid,
+                diplayName: displayName,
+                photoUrl: photoURL,
+                email: email
+              };
+              userRef.set(dbUser, { merge: true }).then(() => {
+                setUpNewUserAccount(userRef);
+              });
+            }
+          })
+          .catch(error => {
+            console.error(error);
+          });
+      })();
+
       // [START_EXCLUDE]
       document.getElementById("quickstart-button").textContent = "Sign out";
       document.getElementById("quickstart-sign-in-status").textContent =
