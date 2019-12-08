@@ -105,7 +105,7 @@ function App() {
           <Route path="/list/:listId">
             <List userId={user.id} />
           </Route>
-          <Redirect from="/" to="list/inbox" />
+          <Redirect from="/" to="/list/inbox" />
         </Router>
       </div>
     </div>
