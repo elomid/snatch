@@ -1,5 +1,8 @@
 /* globals chrome, firebase */
 
+// TODO: remove this log before publishign
+var log = chrome.extension.getBackgroundPage().console.log;
+
 // Initialize Firebase
 var config = {
   apiKey: "AIzaSyB2rRbMgGNT-Za0SfEMekz4M01nXK9_yFA",
@@ -22,19 +25,25 @@ function pageExists(uid, url) {
     .collection("users")
     .doc(uid)
     .collection("pages");
-  pagesRef
-    .where("url", "==", url)
-    .get()
-    .then(function(querySnapshot) {
-      querySnapshot.forEach(function(doc) {
-        url.push(doc.data());
+
+  return new Promise((resolve, reject) => {
+    pagesRef
+      .where("url", "==", url)
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          urls.push(doc.data());
+        });
+      })
+      .then(() => {
+        resolve(urls.length > 0);
+      })
+      .catch(error => {
+        reject(error);
       });
-    })
-    .catch(function(error) {
-      console.error("Error getting documents: ", error);
-    });
-  return urls.length > 0;
+  });
 }
+
 /**
  * initApp handles setting up the Firebase context and registering
  * callbacks for the auth status.
@@ -86,11 +95,8 @@ function initApp() {
       // User is signed in.
       var displayName = user.displayName;
       var email = user.email;
-      var emailVerified = user.emailVerified;
       var photoURL = user.photoURL;
-      var isAnonymous = user.isAnonymous;
       var uid = user.uid;
-      var providerData = user.providerData;
 
       (async function createOrLocateUser(uid) {
         const userRef = db.collection("users").doc(uid);
@@ -120,30 +126,33 @@ function initApp() {
         "quickstart-user-details-container"
       );
 
-      chrome.tabs.query({ active: true, lastFocusedWindow: true }, function(
-        tabs
-      ) {
-        var url = tabs[0].url;
-        if (!pageExists(uid, url)) {
-          container.innerHTML = "<div>Saving this page...</div>";
+      chrome.tabs.query(
+        { active: true, lastFocusedWindow: true },
+        async function(tabs) {
+          var url = tabs[0].url;
+          pageExists(uid, url).then(exists => {
+            if (!exists) {
+              container.innerHTML = "<div>Saving this page...</div>";
 
-          (async () => {
-            const rawResponse = await fetch(endpoint, {
-              method: "POST",
-              headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json"
-              },
-              body: JSON.stringify({ userId: uid, url: url })
-            });
-            const response = await rawResponse.json();
-            container.innerHTML = "<div>Done.</div>";
-          })();
-        } else {
-          container.innerHTML = `<div>This page is already saved.</div>
-          <div><a href="https://www.snatch.page">Open Snatch</a></div>`;
+              (async () => {
+                const rawResponse = await fetch(endpoint, {
+                  method: "POST",
+                  headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json"
+                  },
+                  body: JSON.stringify({ userId: uid, url: url })
+                });
+                const response = await rawResponse.json();
+                container.innerHTML = "<div>Done.</div>";
+              })();
+            } else {
+              container.innerHTML = `<div>This page is already saved.</div>
+            <div><a href="https://www.snatch.page">Open Snatch</a></div>`;
+            }
+          });
         }
-      });
+      );
 
       // document.getElementById("quickstart-button").textContent = "Sign out";
       // document.getElementById("quickstart-sign-in-status").textContent =

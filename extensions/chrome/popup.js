@@ -20,7 +20,6 @@ signInButton.addEventListener("click", signInWithGoogle);
 
 function signInWithGoogle() {
   const provider = new firebase.auth.GoogleAuthProvider();
-  console.log(provider);
   firebase.auth().signInWithPopup(provider);
 }
 
@@ -48,7 +47,5 @@ chrome.tabs.query({ active: true, lastFocusedWindow: true }, function(tabs) {
     const content = await rawResponse.json();
     loading = false;
     root.innerHTML = "<div>Done!</div>";
-
-    console.log(content);
   })();
 });
