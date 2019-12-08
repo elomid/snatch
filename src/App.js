@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import firebase, { db } from "./firebase";
 import Header from "./Header";
 import Nav from "./Nav";
@@ -105,6 +105,7 @@ function App() {
           <Route path="/list/:listId">
             <List userId={user.id} />
           </Route>
+          <Redirect from="/" to="list/inbox" />
         </Router>
       </div>
     </div>

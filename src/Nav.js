@@ -1,11 +1,5 @@
 import React, { useState } from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  NavLink
-} from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import ComposeList from "./ComposeList";
 import { db } from "./firebase";
 import { slugify } from "./utils";
@@ -45,7 +39,7 @@ function Nav({ userId }) {
               className="nav-item"
               activeClassName="nav-item--active"
               key={list.id}
-              to={`/list/${list.path}`}
+              to={`/list/${list.id}`}
             >
               {list.title}
             </NavLink>
