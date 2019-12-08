@@ -147,8 +147,8 @@ function initApp() {
                 container.innerHTML = "<div>Done.</div>";
               })();
             } else {
-              container.innerHTML = `<div>This page is already saved.</div>
-            <div><a href="https://www.snatch.page">Open Snatch</a></div>`;
+              container.innerHTML = `<div>You already have this page in your Snatch library.</div>
+            <div><a class="link" target="_blank" href="https://www.snatch.page">Open Snatch</a></div>`;
             }
           });
         }
