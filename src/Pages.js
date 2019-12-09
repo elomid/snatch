@@ -27,7 +27,13 @@ function Pages({ userId, listId, lists }) {
           <div>
             <ul className="pages">
               {unarchivedPages.map(page => (
-                <Page key={page.id} page={page} userId={userId} lists={lists} />
+                <Page
+                  key={page.id}
+                  page={page}
+                  userId={userId}
+                  lists={lists}
+                  listId={listId}
+                />
               ))}
             </ul>
             {archivedPages.length > 0 && (
@@ -49,6 +55,7 @@ function Pages({ userId, listId, lists }) {
                     page={page}
                     userId={userId}
                     lists={lists}
+                    listId={listId}
                   />
                 ))}
               </ul>

@@ -3,7 +3,7 @@ import { Menu, MenuList, MenuButton, MenuItem } from "@reach/menu-button";
 import "@reach/menu-button/styles.css";
 import { db } from "./firebase";
 
-function PageActions({ userId, page, lists }) {
+function PageActions({ userId, page, lists, listId }) {
   const toggleArchive = (userId, pageId) => {
     let isArchived = false;
     const pageRef = db
@@ -30,6 +30,20 @@ function PageActions({ userId, page, lists }) {
     pageRef.delete().then(res => res);
   };
 
+  const handleMove = (userId, pageId, listId) => {
+    const pageRef = db
+      .collection("users")
+      .doc(userId)
+      .collection("pages")
+      .doc(pageId);
+    pageRef.set(
+      {
+        listId
+      },
+      { merge: true }
+    );
+  };
+
   return (
     <div className="page-actions">
       <button
@@ -44,23 +58,21 @@ function PageActions({ userId, page, lists }) {
       >
         Delete
       </button>
-      <ListsMenu lists={lists} />
+      <Menu>
+        <MenuButton className="button button-secondary">
+          Actions <span aria-hidden>▾</span>
+        </MenuButton>
+        <MenuList className="menu-list">
+          {lists
+            .filter(list => list.id !== listId)
+            .map(list => (
+              <MenuItem onSelect={() => handleMove(userId, page.id, list.id)}>
+                {list.title}
+              </MenuItem>
+            ))}
+        </MenuList>
+      </Menu>
     </div>
-  );
-}
-
-function ListsMenu({ lists }) {
-  return (
-    <Menu>
-      <MenuButton className="button button-secondary">
-        Actions <span aria-hidden>▾</span>
-      </MenuButton>
-      <MenuList className="menu-list">
-        {lists.map(list => (
-          <MenuItem onSelect={() => alert(list.title)}>{list.title}</MenuItem>
-        ))}
-      </MenuList>
-    </Menu>
   );
 }
 
