@@ -7,8 +7,8 @@ import PagePublisher from "./PagePublisher";
 function Page({ page, userId, lists, listId }) {
   return (
     <li className={page.archived ? "page page--archived" : "page"}>
-      {page.publisher && <PagePublisher publisher={page.publisher} />}
       <PageLink url={page.url} title={page.title} />
+      {page.publisher && <PagePublisher publisher={page.publisher} />}
       <PageDescription description={page.description} />
       <PageActions userId={userId} page={page} lists={lists} listId={listId} />
     </li>

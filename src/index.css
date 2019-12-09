@@ -54,11 +54,11 @@ body {
   padding: 24px;
   overflow-y: auto;
   height: 100%;
+  background-color: #f9fafd;
 }
 
 .nav-item {
   display: block;
-  background: white;
   color: rgb(38, 36, 46);
   font-weight: 500;
   margin-bottom: 8px;
@@ -125,13 +125,13 @@ body {
 }
 
 .page-publisher {
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 500;
   margin-bottom: 8px;
-  color: #2385ec;
+  color: hsla(211, 91%, 44%, 1);
   display: inline-block;
-  background: #e4f8ff;
-  padding: 4px 8px;
+  background: hsla(196, 56%, 96%, 1);
+  padding: 2px 8px;
   border-radius: 4px;
 }
 
@@ -213,7 +213,7 @@ body {
   background: white;
   border: 1px solid #dededf;
   border-radius: 6px;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
 }
 
 .list-title {
@@ -304,11 +304,12 @@ body {
   border-radius: 4px;
   border: 1px solid #dededf;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 }
 
 [data-reach-menu-item][data-selected] {
-  background-color: rgb(234, 229, 251) !important;
-  color: rgb(88, 38, 242) !important;
+  background-color: rgb(240, 240, 245) !important;
+  color: rgb(38, 36, 46) !important;
 }
 
 [data-reach-menu-item] {

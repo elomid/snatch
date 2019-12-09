@@ -92,7 +92,7 @@ function ListInfo({ userId, listId, listTitle }) {
         {listId !== "inbox" && (
           <Menu>
             <MenuButton className="button button-secondary button-slim">
-              List actions <span aria-hidden>▾</span>
+              List actions <span aria-hidden> ▾</span>
             </MenuButton>
             <MenuList className="menu-list">
               <MenuItem onSelect={() => deleteList(userId, listId)}>

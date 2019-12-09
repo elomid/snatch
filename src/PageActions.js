@@ -61,7 +61,7 @@ function PageActions({ userId, page, lists, listId }) {
       {lists.length > 1 && (
         <Menu>
           <MenuButton className="button button-secondary">
-            Move to <span aria-hidden>▾</span>
+            List actions <span aria-hidden> ▾</span>
           </MenuButton>
           <MenuList className="menu-list">
             {lists
