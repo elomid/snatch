@@ -15,7 +15,7 @@ function Pages({ userId, listId }) {
   return (
     <ul className="pages">
       {pages.map(page => (
-        <Page key={page.id} page={page} />
+        <Page key={page.id} page={page} userId={userId} />
       ))}
     </ul>
   );
