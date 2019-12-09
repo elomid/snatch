@@ -4,13 +4,13 @@ import PageActions from "./PageActions";
 import PageDescription from "./PageDescription";
 import PagePublisher from "./PagePublisher";
 
-function Page({ page, userId }) {
+function Page({ page, userId, lists, listId }) {
   return (
     <li className={page.archived ? "page page--archived" : "page"}>
       {page.publisher && <PagePublisher publisher={page.publisher} />}
       <PageLink url={page.url} title={page.title} />
       <PageDescription description={page.description} />
-      <PageActions userId={userId} page={page} />
+      <PageActions userId={userId} page={page} lists={lists} listId={listId} />
     </li>
   );
 }

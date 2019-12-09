@@ -1,7 +1,9 @@
 import React from "react";
+import { Menu, MenuList, MenuButton, MenuItem } from "@reach/menu-button";
+import "@reach/menu-button/styles.css";
 import { db } from "./firebase";
 
-function PageActions({ userId, page }) {
+function PageActions({ userId, page, lists, listId }) {
   const toggleArchive = (userId, pageId) => {
     let isArchived = false;
     const pageRef = db
@@ -28,6 +30,20 @@ function PageActions({ userId, page }) {
     pageRef.delete().then(res => res);
   };
 
+  const handleMove = (userId, pageId, listId) => {
+    const pageRef = db
+      .collection("users")
+      .doc(userId)
+      .collection("pages")
+      .doc(pageId);
+    pageRef.set(
+      {
+        listId
+      },
+      { merge: true }
+    );
+  };
+
   return (
     <div className="page-actions">
       <button
@@ -42,7 +58,23 @@ function PageActions({ userId, page }) {
       >
         Delete
       </button>
-      <button className="button button-secondary">Move to</button>
+      <Menu>
+        <MenuButton className="button button-secondary">
+          Move to <span aria-hidden>▾</span>
+        </MenuButton>
+        <MenuList className="menu-list">
+          {lists
+            .filter(list => list.id !== listId)
+            .map(list => (
+              <MenuItem
+                key={list.id}
+                onSelect={() => handleMove(userId, page.id, list.id)}
+              >
+                {list.title}
+              </MenuItem>
+            ))}
+        </MenuList>
+      </Menu>
     </div>
   );
 }

@@ -98,16 +98,18 @@ function App() {
     <div>Loading...</div>
   ) : user ? (
     <div>
-      <Header user={user} onSignOut={handleSignOut} />
-      <div className="content-wrapper">
-        <Router>
+      <Router>
+        <Header user={user} onSignOut={handleSignOut} />
+        <div className="content-wrapper">
           <Nav userId={user.id} />
+
           <Route path="/list/:listId">
             <List userId={user.id} />
           </Route>
+
           <Redirect from="/" to="/list/inbox" />
-        </Router>
-      </div>
+        </div>
+      </Router>
     </div>
   ) : (
     <SignIn />
