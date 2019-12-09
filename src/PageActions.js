@@ -1,7 +1,9 @@
 import React from "react";
+import { Menu, MenuList, MenuButton, MenuItem } from "@reach/menu-button";
+import "@reach/menu-button/styles.css";
 import { db } from "./firebase";
 
-function PageActions({ userId, page }) {
+function PageActions({ userId, page, lists }) {
   const toggleArchive = (userId, pageId) => {
     let isArchived = false;
     const pageRef = db
@@ -42,8 +44,23 @@ function PageActions({ userId, page }) {
       >
         Delete
       </button>
-      <button className="button button-secondary">Move to</button>
+      <ListsMenu lists={lists} />
     </div>
+  );
+}
+
+function ListsMenu({ lists }) {
+  return (
+    <Menu>
+      <MenuButton className="button button-secondary">
+        Actions <span aria-hidden>▾</span>
+      </MenuButton>
+      <MenuList className="menu-list">
+        {lists.map(list => (
+          <MenuItem onSelect={() => alert(list.title)}>{list.title}</MenuItem>
+        ))}
+      </MenuList>
+    </Menu>
   );
 }
 

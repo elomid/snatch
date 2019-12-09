@@ -3,7 +3,7 @@ import { db } from "./firebase";
 import Page from "./Page";
 import useCollection from "./useCollection";
 
-function Pages({ userId, listId }) {
+function Pages({ userId, listId, lists }) {
   const [loading, pages] = useCollection({
     userId,
     path: "/pages",
@@ -27,7 +27,7 @@ function Pages({ userId, listId }) {
           <div>
             <ul className="pages">
               {unarchivedPages.map(page => (
-                <Page key={page.id} page={page} userId={userId} />
+                <Page key={page.id} page={page} userId={userId} lists={lists} />
               ))}
             </ul>
             {archivedPages.length > 0 && (
@@ -44,7 +44,12 @@ function Pages({ userId, listId }) {
             <div>
               <ul className="pages pages--archived">
                 {archivedPages.map(page => (
-                  <Page key={page.id} page={page} userId={userId} />
+                  <Page
+                    key={page.id}
+                    page={page}
+                    userId={userId}
+                    lists={lists}
+                  />
                 ))}
               </ul>
             </div>
