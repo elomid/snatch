@@ -19,6 +19,15 @@ function PageActions({ userId, page }) {
       .then(() => pageRef.update({ archived: !isArchived }));
   };
 
+  const handleDelete = (userId, pageId) => {
+    const pageRef = db
+      .collection("users")
+      .doc(userId)
+      .collection("pages")
+      .doc(pageId);
+    pageRef.delete().then(res => res);
+  };
+
   return (
     <div className="page-actions">
       <button
@@ -27,7 +36,12 @@ function PageActions({ userId, page }) {
       >
         {page.archived ? `Unarchive` : `Archive`}
       </button>
-      <button className="button button-secondary">Delete</button>
+      <button
+        onClick={() => handleDelete(userId, page.id)}
+        className="button button-secondary"
+      >
+        Delete
+      </button>
       <button className="button button-secondary">Move to</button>
     </div>
   );
