@@ -2,11 +2,11 @@
   xmlns="http://www.w3.org/2000/svg" width="90" height="24">
   <defs/>
   <g fill="none" fill-rule="evenodd">
-    <g>
+    <g fill-rule="nonzero">
       <circle cx="12" cy="12" r="12" fill="#5826F2" transform="rotate(90 12 12)"/>
-      <path fill="#FFF" d="M7 17.6818182l5-3.7037037 5 3.7037037V7.7996633c0-.81819963-.63959321-1.48148148-1.42857143-1.48148148H8.4285714C7.6395932 6.31818182 7 6.98146367 7 7.7996633v9.8821549z"/>
+      <path fill="#FFF" d="M7 17.6818182l5-3.7037037 5 3.7037037V7.7996633c0-.81819963-.6395932-1.48148148-1.4285714-1.48148148H8.4285714C7.6395932 6.31818182 7 6.98146367 7 7.7996633v9.8821549z"/>
     </g>
-    <text fill="#524A68" font-family="SFProRounded-Medium, SF Pro Rounded" font-size="19" font-weight="400" transform="translate(30)">
+    <text fill="#656170" font-family="SFProRounded-Regular, SF Pro Rounded" font-size="19" transform="translate(32 1)">
       <tspan x="0" y="18">Snatch</tspan>
     </text>
   </g>

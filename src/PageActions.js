@@ -66,7 +66,10 @@ function PageActions({ userId, page, lists, listId }) {
           {lists
             .filter(list => list.id !== listId)
             .map(list => (
-              <MenuItem onSelect={() => handleMove(userId, page.id, list.id)}>
+              <MenuItem
+                key={list.id}
+                onSelect={() => handleMove(userId, page.id, list.id)}
+              >
                 {list.title}
               </MenuItem>
             ))}

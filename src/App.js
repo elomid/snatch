@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import firebase, { db } from "./firebase";
-import useCollection from "./useCollection";
 import Header from "./Header";
 import Nav from "./Nav";
 import List from "./List";
@@ -99,9 +98,9 @@ function App() {
     <div>Loading...</div>
   ) : user ? (
     <div>
-      <Header user={user} onSignOut={handleSignOut} />
-      <div className="content-wrapper">
-        <Router>
+      <Router>
+        <Header user={user} onSignOut={handleSignOut} />
+        <div className="content-wrapper">
           <Nav userId={user.id} />
 
           <Route path="/list/:listId">
@@ -109,8 +108,8 @@ function App() {
           </Route>
 
           <Redirect from="/" to="/list/inbox" />
-        </Router>
-      </div>
+        </div>
+      </Router>
     </div>
   ) : (
     <SignIn />

@@ -13,8 +13,8 @@ function Pages({ userId, listId, lists }) {
   });
   const [showArchived, setShowArchived] = useState(false);
 
-  const unarchivedPages = pages.filter(page => !page.archived);
-  const archivedPages = pages.filter(page => page.archived);
+  const unarchivedPages = pages.filter(page => !page.archived).reverse();
+  const archivedPages = pages.filter(page => page.archived).reverse();
 
   const toggleShowArchived = () => {
     setShowArchived(currentShowArchived => !currentShowArchived);
@@ -38,7 +38,7 @@ function Pages({ userId, listId, lists }) {
             </ul>
             {archivedPages.length > 0 && (
               <button
-                className="button button-secondary"
+                className="button button-secondary button-archived-toggle"
                 onClick={toggleShowArchived}
               >
                 {showArchived ? "Hide" : "Show"} {archivedPages.length} archived{" "}
