@@ -128,7 +128,7 @@ body {
   font-size: 12px;
   font-weight: 500;
   margin-bottom: 8px;
-  color: #4d74a7;
+  color: #2385ec;
   display: inline-block;
   background: #e4f8ff;
   padding: 4px 8px;
@@ -150,6 +150,7 @@ body {
   font-size: 14px;
   transition: background 0.2s ease;
   cursor: pointer;
+  background-color: white;
 }
 
 .button-secondary {

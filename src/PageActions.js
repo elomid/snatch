@@ -58,23 +58,25 @@ function PageActions({ userId, page, lists, listId }) {
       >
         Delete
       </button>
-      <Menu>
-        <MenuButton className="button button-secondary">
-          Move to <span aria-hidden>▾</span>
-        </MenuButton>
-        <MenuList className="menu-list">
-          {lists
-            .filter(list => list.id !== listId)
-            .map(list => (
-              <MenuItem
-                key={list.id}
-                onSelect={() => handleMove(userId, page.id, list.id)}
-              >
-                {list.title}
-              </MenuItem>
-            ))}
-        </MenuList>
-      </Menu>
+      {lists.length > 1 && (
+        <Menu>
+          <MenuButton className="button button-secondary">
+            Move to <span aria-hidden>▾</span>
+          </MenuButton>
+          <MenuList className="menu-list">
+            {lists
+              .filter(list => list.id !== listId)
+              .map(list => (
+                <MenuItem
+                  key={list.id}
+                  onSelect={() => handleMove(userId, page.id, list.id)}
+                >
+                  {list.title}
+                </MenuItem>
+              ))}
+          </MenuList>
+        </Menu>
+      )}
     </div>
   );
 }
