@@ -60,7 +60,7 @@ function PageActions({ userId, page, lists, listId }) {
       </button>
       <Menu>
         <MenuButton className="button button-secondary">
-          Actions <span aria-hidden>▾</span>
+          Move to <span aria-hidden>▾</span>
         </MenuButton>
         <MenuList className="menu-list">
           {lists
