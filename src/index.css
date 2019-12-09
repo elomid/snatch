@@ -60,6 +60,9 @@ body {
 .nav-item {
   display: block;
   color: rgb(38, 36, 46);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   font-weight: 500;
   margin-bottom: 8px;
   padding: 8px;
@@ -220,8 +223,11 @@ body {
 .list-title {
   font-size: 28px;
   font-weight: 600;
-  display: flex;
   align-items: center;
+}
+
+.list-actions {
+  margin-top: 16px;
 }
 
 .title-input {

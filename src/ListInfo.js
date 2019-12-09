@@ -90,19 +90,21 @@ function ListInfo({ userId, listId, listTitle }) {
           </form>
         )}
         {listId !== "inbox" && (
-          <Menu>
-            <MenuButton className="button button-secondary button-slim">
-              Actions <span aria-hidden> ▾</span>
-            </MenuButton>
-            <MenuList className="menu-list">
-              <MenuItem onSelect={() => deleteList(userId, listId)}>
-                Delete list
-              </MenuItem>
-              <MenuItem onSelect={() => setComposing(true)}>
-                Rename list
-              </MenuItem>
-            </MenuList>
-          </Menu>
+          <div className="list-actions">
+            <Menu>
+              <MenuButton className="button button-secondary button-slim">
+                Actions <span aria-hidden> ▾</span>
+              </MenuButton>
+              <MenuList className="menu-list">
+                <MenuItem onSelect={() => deleteList(userId, listId)}>
+                  Delete list
+                </MenuItem>
+                <MenuItem onSelect={() => setComposing(true)}>
+                  Rename list
+                </MenuItem>
+              </MenuList>
+            </Menu>
+          </div>
         )}
       </div>
     </div>
