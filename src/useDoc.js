@@ -6,15 +6,13 @@ function useDoc(path) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    db.doc(path)
-      .get()
-      .then(doc => {
-        setDoc({
-          id: doc.id,
-          ...doc.data()
-        });
-        setLoading(false);
+    return db.doc(path).onSnapshot(doc => {
+      setDoc({
+        id: doc.id,
+        ...doc.data()
       });
+      setLoading(false);
+    });
   }, [path]);
   return [loading, doc];
 }

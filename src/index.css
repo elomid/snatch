@@ -7,6 +7,10 @@
   outline: none;
 }
 
+html {
+  overflow-y: scroll;
+}
+
 body {
   font-size: 16px;
   line-height: 1.5em;
@@ -153,6 +157,10 @@ body {
   margin-right: 8px;
 }
 
+.button-slim {
+  padding: 4px 8px;
+}
+
 .button-primary {
   border: 1px solid rgb(78, 22, 248);
   background: rgb(78, 22, 248);
@@ -189,25 +197,37 @@ body {
 
 .list-info {
   margin-bottom: 8px;
+  position: relative;
+}
+
+.list-rename-compose {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  max-width: 640px;
+  background: steelblue;
+  z-index: 10;
+  padding: 16px 24px;
+  background: white;
+  border: 1px solid #dededf;
+  border-radius: 6px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
 }
 
 .list-title {
   font-size: 28px;
   font-weight: 600;
+  display: flex;
+  align-items: center;
 }
 
 .title-input {
   font: inherit;
   border: 1px solid transparent;
   background-color: transparent;
-}
-
-.title-input:hover {
-  border: 1px dashed #dededf;
-}
-
-.title-input:focus {
-  border: 1px solid #dededf;
+  display: inline-block;
+  margin-right: 16px;
 }
 
 .header {
@@ -242,7 +262,6 @@ body {
   margin-top: 12px;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
 }
 
 .sign-in {
