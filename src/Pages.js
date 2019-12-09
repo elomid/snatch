@@ -22,29 +22,33 @@ function Pages({ userId, listId }) {
 
   return (
     <div>
-      <div>
-        <ul className="pages">
-          {unarchivedPages.map(page => (
-            <Page key={page.id} page={page} userId={userId} />
-          ))}
-        </ul>
-        {
-          <button
-            className="button button-secondary"
-            onClick={toggleShowArchived}
-          >
-            {showArchived ? "Hide" : "Show"} {archivedPages.length} archived{" "}
-            {archivedPages.length === 1 ? "item" : "items"}
-          </button>
-        }
-      </div>
-      {showArchived && (
+      {!loading && (
         <div>
-          <ul className="pages pages--archived">
-            {archivedPages.map(page => (
-              <Page key={page.id} page={page} userId={userId} />
-            ))}
-          </ul>
+          <div>
+            <ul className="pages">
+              {unarchivedPages.map(page => (
+                <Page key={page.id} page={page} userId={userId} />
+              ))}
+            </ul>
+            {archivedPages.length > 0 && (
+              <button
+                className="button button-secondary"
+                onClick={toggleShowArchived}
+              >
+                {showArchived ? "Hide" : "Show"} {archivedPages.length} archived{" "}
+                {archivedPages.length === 1 ? "item" : "items"}
+              </button>
+            )}
+          </div>
+          {showArchived && (
+            <div>
+              <ul className="pages pages--archived">
+                {archivedPages.map(page => (
+                  <Page key={page.id} page={page} userId={userId} />
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
       )}
     </div>
