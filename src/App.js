@@ -95,7 +95,7 @@ function App() {
   };
 
   return loading ? (
-    <div>Loading...</div>
+    <div></div>
   ) : user ? (
     <div>
       <Router>

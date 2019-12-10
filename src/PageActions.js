@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { Menu, MenuList, MenuButton, MenuItem } from "@reach/menu-button";
 import "@reach/menu-button/styles.css";
 import { db } from "./firebase";
+import ConfirmationModal from "./ConfirmationModal";
 
 function PageActions({ userId, page, lists, listId }) {
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+
   const toggleArchive = (userId, pageId) => {
     let isArchived = false;
     const pageRef = db
@@ -46,6 +49,16 @@ function PageActions({ userId, page, lists, listId }) {
 
   return (
     <div className="page-actions">
+      {showConfirmationModal && (
+        <ConfirmationModal
+          title={`Delete page?`}
+          onCancel={() => {
+            setShowConfirmationModal(false);
+          }}
+          onConfirm={() => handleDelete(userId, page.id)}
+          buttonText="Delete page"
+        />
+      )}
       <button
         onClick={() => toggleArchive(userId, page.id)}
         className="button button-secondary"
@@ -53,7 +66,7 @@ function PageActions({ userId, page, lists, listId }) {
         {page.archived ? `Unarchive` : `Archive`}
       </button>
       <button
-        onClick={() => handleDelete(userId, page.id)}
+        onClick={() => setShowConfirmationModal(true)}
         className="button button-secondary"
       >
         Delete
