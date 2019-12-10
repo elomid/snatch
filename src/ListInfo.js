@@ -4,8 +4,10 @@ import { db } from "./firebase";
 import { useHistory } from "react-router-dom";
 import { Menu, MenuList, MenuButton, MenuItem } from "@reach/menu-button";
 import "@reach/menu-button/styles.css";
+import ConfirmationModal from "./ConfirmationModal";
 
 function ListInfo({ userId, listId, listTitle }) {
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [loading, list] = useDoc("users/" + userId + "/lists/" + listId);
   let history = useHistory();
   const [composing, setComposing] = useState(false);
@@ -17,6 +19,7 @@ function ListInfo({ userId, listId, listTitle }) {
   }, [list, composing]);
 
   const deleteList = (userId, listId) => {
+    setShowConfirmationModal(false);
     history.push("/inbox");
     const collectionRef = db
       .collection("users")
@@ -56,6 +59,16 @@ function ListInfo({ userId, listId, listTitle }) {
 
   return (
     <div className="list-info">
+      {showConfirmationModal && (
+        <ConfirmationModal
+          title={`Delete ${list.title}?`}
+          onCancel={() => {
+            setShowConfirmationModal(false);
+          }}
+          onConfirm={() => deleteList(userId, listId)}
+          buttonText="Delete list"
+        />
+      )}
       <div className="list-title">
         {!composing && <h2 className="title-input">{list && list.title}</h2>}
         {composing && (
@@ -96,7 +109,7 @@ function ListInfo({ userId, listId, listTitle }) {
                 Actions <span aria-hidden> ▾</span>
               </MenuButton>
               <MenuList className="menu-list">
-                <MenuItem onSelect={() => deleteList(userId, listId)}>
+                <MenuItem onSelect={() => setShowConfirmationModal(true)}>
                   Delete list
                 </MenuItem>
                 <MenuItem onSelect={() => setComposing(true)}>
