@@ -28,7 +28,7 @@ function ListInfo({ userId, listId, listTitle }) {
       .doc(listId);
     collectionRef.delete().then(() => {
       if (history[history.length - 1] !== "/inbox") {
-        history.push("/inbox");
+        history.push("/list/inbox");
       }
     });
   };
