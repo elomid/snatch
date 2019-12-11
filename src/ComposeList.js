@@ -1,7 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 function ComposeList({ onCancel, onSubmit }) {
   const [input, setInput] = useState("");
+  const inputRef = useRef();
+
+  useEffect(() => {
+    inputRef && inputRef.current.focus();
+  }, []);
 
   const handleInputChange = event => {
     setInput(event.target.value);
@@ -23,6 +28,7 @@ function ComposeList({ onCancel, onSubmit }) {
         type="text"
         placeholder="Enter list title..."
         value={input}
+        ref={inputRef}
       />
       <div className="compose-actions">
         <button

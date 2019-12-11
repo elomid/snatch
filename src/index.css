@@ -272,6 +272,12 @@ body {
   border-radius: 4px;
 }
 
+.compose-input:focus {
+  border-color: #5925f2;
+  outline: 0;
+  box-shadow: 0 0 0.2rem 0.2rem #5925f21f;
+}
+
 .compose-actions {
   margin-top: 12px;
   display: flex;

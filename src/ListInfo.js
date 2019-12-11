@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import useDoc from "./useDoc";
 import { db } from "./firebase";
 import { useHistory } from "react-router-dom";
@@ -9,12 +9,17 @@ import ConfirmationModal from "./ConfirmationModal";
 function ListInfo({ userId, listId, listTitle }) {
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [loading, list] = useDoc("users/" + userId + "/lists/" + listId);
+  const inputRef = useRef();
+
   let history = useHistory();
   const [composing, setComposing] = useState(false);
   const [input, setInput] = useState();
   useEffect(() => {
     if (list) {
       setInput(list.title);
+    }
+    if (inputRef && inputRef.current) {
+      inputRef.current.focus();
     }
   }, [list, composing]);
 
@@ -86,6 +91,7 @@ function ListInfo({ userId, listId, listTitle }) {
                 type="text"
                 placeholder="Enter list title..."
                 value={input}
+                ref={inputRef}
               />
             </div>
             <div className="compose-actions">
