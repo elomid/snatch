@@ -1,6 +1,15 @@
 /* globals chrome, firebase */
 let loading = true;
 let error = null;
+
+const loadingHtml = (message = "") => `
+<div class="spinner">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+</div>
+<div class="loading-message">${message}</div>
+`;
 // Initialize Firebase
 var config = {
   apiKey: "AIzaSyB2rRbMgGNT-Za0SfEMekz4M01nXK9_yFA",
@@ -76,8 +85,10 @@ function initApp() {
   // [START authstatelistener]
   loading = true;
   error = null;
-  var container = document.getElementById("quickstart-user-details-container");
-  container.innerHTML = "<div>LOAAAAAAAADING...</div>";
+  let container = document.getElementById("quickstart-user-details-container");
+  container.innerHTML = loadingHtml("");
+
+  let quickstartButton = document.getElementById("quickstart-button");
 
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
@@ -123,19 +134,29 @@ function initApp() {
           var url = tabs[0].url;
           pageExists(uid, url).then(exists => {
             if (!exists) {
-              container.innerHTML = "<div>Saving this page...</div>";
+              container.innerHTML = loadingHtml("Saving");
 
               (async () => {
-                const rawResponse = await fetch(endpoint, {
-                  method: "POST",
-                  headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json"
-                  },
-                  body: JSON.stringify({ userId: uid, url: url })
-                });
-                const response = await rawResponse.json();
-                container.innerHTML = "<div>Done.</div>";
+                try {
+                  const rawResponse = await fetch(endpoint, {
+                    method: "POST",
+                    headers: {
+                      Accept: "application/json",
+                      "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ userId: uid, url: url })
+                  });
+                  const response = await rawResponse.json();
+                  loading = false;
+                  error = null;
+                  container.innerHTML = "<div>Done.</div>";
+                } catch (error) {
+                  console.log("ERROR: ", error);
+                  loading = false;
+                  error = error;
+                  container.innerHTML =
+                    "<div>Something went wrong. Please try again.</div>";
+                }
               })();
             } else {
               container.innerHTML = `<div>You already have this page in your Snatch library.</div>
@@ -157,13 +178,14 @@ function initApp() {
         "null";
       // [END_EXCLUDE]
     }
-    document.getElementById("quickstart-button").disabled = false;
+    if (quickstartButton) {
+      quickstartButton.disabled = false;
+    }
   });
   // [END authstatelistener]
-
-  document
-    .getElementById("quickstart-button")
-    .addEventListener("click", startSignIn, false);
+  if (quickstartButton) {
+    quickstartButton.addEventListener("click", startSignIn, false);
+  }
 }
 
 /**
@@ -202,8 +224,10 @@ function startAuth(interactive) {
  * Starts the sign-in process.
  */
 function startSignIn() {
-  console.log("credentials.js: startSignIn");
-  document.getElementById("quickstart-button").disabled = true;
+  let quickstartButton = document.getElementById("quickstart-button");
+  if (quickstartButton) {
+    quickstartButton.disabled = true;
+  }
   if (firebase.auth().currentUser) {
     firebase.auth().signOut();
   } else {
