@@ -87,7 +87,8 @@ function initApp() {
   let container = document.getElementById("quickstart-user-details-container");
   container.innerHTML = loadingHtml("");
 
-  let quickstartButton = document.getElementById("quickstart-button");
+  let signInButton = document.createElement("button");
+  signInButton.textContent = "Sign-in with Google";
 
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
@@ -144,6 +145,9 @@ function initApp() {
                   const response = await rawResponse.json();
                   loading = false;
                   error = null;
+                  let signOutButton = document.createElement("button");
+                  signOutButton.textContent = "Sign out";
+                  signOutButton.addEventListener("click", startSignIn);
                   container.innerHTML = "<div>Done.</div>";
                 } catch (error) {
                   loading = false;
@@ -153,7 +157,7 @@ function initApp() {
                 }
               })();
             } else {
-              container.innerHTML = `<div>You already have this page in your Snatch library.</div>
+              container.innerHTML = `<div class="paragraph">You already have this page in your Snatch library.</div>
             <div><a class="link" target="_blank" href="https://www.snatch.page">Open Snatch</a></div>`;
             }
           });
@@ -162,24 +166,11 @@ function initApp() {
 
       // [END_EXCLUDE]
     } else {
-      // Let's try to get a Google auth token programmatically.
-      // [START_EXCLUDE]
-      document.getElementById("quickstart-button").textContent =
-        "Sign-in with Google";
-      document.getElementById("quickstart-sign-in-status").textContent =
-        "Signed out";
-      document.getElementById("quickstart-account-details").textContent =
-        "null";
-      // [END_EXCLUDE]
-    }
-    if (quickstartButton) {
-      quickstartButton.disabled = false;
+      container.innerHTML = "";
+      container.appendChild(signInButton);
+      signInButton.addEventListener("click", startSignIn, false);
     }
   });
-  // [END authstatelistener]
-  if (quickstartButton) {
-    quickstartButton.addEventListener("click", startSignIn, false);
-  }
 }
 
 /**

@@ -60,7 +60,8 @@ h3 {
   line-height: 40px;
 }
 
-.link {
+.link,
+button {
   text-decoration: none;
   color: #5826f2;
   padding: 8px 16px;
@@ -68,7 +69,11 @@ h3 {
   background-color: rgb(234, 229, 251);
   display: inline-block;
   border-radius: 4px;
-  margin-top: 16px;
+  cursor: pointer;
+}
+
+.paragraph {
+  margin-bottom: 16px;
 }
 
 .spinner {
