@@ -27,7 +27,6 @@ var db = firebase.firestore();
 var endpoint = "https://us-central1-snatch-b94e3.cloudfunctions.net/savePage";
 
 function pageExists(uid, url) {
-  console.log("credentials.js : pageExists : line 20");
   var urls = [];
   var pagesRef = db
     .collection("users")
@@ -99,9 +98,6 @@ function initApp() {
       var uid = user.uid;
 
       (async function createOrLocateUser(uid) {
-        console.log(
-          "credentials.js : initApp : onAuthStateChanged : createOrLocateUser:  line 87"
-        );
         const userRef = db.collection("users").doc(uid);
         userRef
           .get()
@@ -130,7 +126,6 @@ function initApp() {
       chrome.tabs.query(
         { active: true, lastFocusedWindow: true },
         async function(tabs) {
-          console.log("credentials.js : inside chrome.tabs.query");
           var url = tabs[0].url;
           pageExists(uid, url).then(exists => {
             if (!exists) {
@@ -151,7 +146,6 @@ function initApp() {
                   error = null;
                   container.innerHTML = "<div>Done.</div>";
                 } catch (error) {
-                  console.log("ERROR: ", error);
                   loading = false;
                   error = error;
                   container.innerHTML =
@@ -193,7 +187,6 @@ function initApp() {
  * @param{boolean} interactive True if the OAuth flow should request with an interactive mode.
  */
 function startAuth(interactive) {
-  console.log("credentials.js: startAuth");
   // Request an OAuth token from the Chrome Identity API.
   chrome.identity.getAuthToken({ interactive: !!interactive }, function(token) {
     if (chrome.runtime.lastError && !interactive) {
